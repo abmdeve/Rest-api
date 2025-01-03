@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+</head>
+<body>
+    <h1>Admin Panel</h1>
+    <p>Bienvenue dans l'interface admin</p>
+    <button id="logoutButton">Se déconnecter</button>
+
+    <script>
+        const logoutButton = document.getElementById('logoutButton');
+
+        // Vérification de l'accès admin
+        fetch('/admin')
+            .then(response => {
+                if (!response.ok) {
+                    window.location.href = '/login'; // Redirection si non connecté
+                }
+            });
+
+        // Gestion de la déconnexion
+        logoutButton.addEventListener('click', async () => {
+            const response = await fetch('/logout', { method: 'POST' });
+            if (response.ok) {
+                window.location.href = '/login';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+</head>
+<body>
+    <h1>Inscription</h1>
+    <form id="registerForm">
+        <label for="username">Nom d'utilisateur :</label>
+        <input type="text" id="username" name="username" required>
+        <br>
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="submit">S'inscrire</button>
+        <p>Pas encore de compte ? <a href="/register">Créer un compte</a></p>
+
+    </form>
+
+    <script>
+        const form = document.getElementById('registerForm');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const response = await fetch('/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
+            if (response.ok) {
+                alert('Inscription réussie ! Redirection vers la page de connexion.');
+                window.location.href = '/login';
+            } else {
+                alert('Erreur lors de l\'inscription.');
+            }
+        });
+    </script>
+</body>
+</html>

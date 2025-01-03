@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil</title>
+</head>
+<body>
+    <h1>Votre Profil</h1>
+    <p id="welcomeMessage"></p>
+    <button id="logoutButton">Se déconnecter</button>
+
+    <script>
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const logoutButton = document.getElementById('logoutButton');
+
+        // Charger le profil utilisateur
+        fetch('/profile')
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    window.location.href = '/login'; // Redirection si non connecté
+                }
+            })
+            .then(data => {
+                welcomeMessage.textContent = data;
+            });
+
+        // Gestion de la déconnexion
+        logoutButton.addEventListener('click', async () => {
+            const response = await fetch('/logout', { method: 'POST' });
+            if (response.ok) {
+                window.location.href = '/login'; // Redirection vers la connexion
+            }
+        });
+    </script>
+</body>
+</html>
